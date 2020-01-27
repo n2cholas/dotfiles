@@ -1,4 +1,7 @@
+autocmd! bufwritepost .vimrc source %
+
 set tabstop=2
+
 set expandtab
 
 set number
@@ -13,12 +16,12 @@ set hlsearch
 set showmatch
 set incsearch
 
-set wildmenu
 set mouse=a
+set clipboard=unnamed
 set noswapfile
 
 let NERDTreeIgnore = ['\.pyc$']
-:command NT NERDTree 
+:command! NT NERDTree 
 
 " Makes the cursor skinny in insert mode
 au InsertEnter * silent execute "!echo -en \<esc>[5 q"
@@ -40,8 +43,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'metakirby5/codi.vim'
 Plug 'zirrostig/vim-schlepp'
-Plug 'junegunn/fzf' ", {'dir': '~/.fzf', 'do': './install --all'}
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 call plug#end()
+
+" 81st column and after get highlighted
+match Error /\%81v.\+/
 
 set background=dark
 colorscheme palenight
@@ -54,40 +60,7 @@ nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
 " For schlepp
-vmap <unique> <up>    <Plug>SchleppUp
-vmap <unique> <down>  <Plug>SchleppDown
-vmap <unique> <left>  <Plug>SchleppLeft
-vmap <unique> <right> <Plug>SchleppRight
-
-"Below are from Damian Conway's talk: https://youtu.be/aHm36-na4-4
-
-"====[ Make the 81st column stand out ]====================
-    highlight ColorColumn ctermbg=magenta
-    call matchadd('ColorColumn', '\%81v', 100)
-
-"=====[ Highlight matches when jumping to next ]=============
-
-    " This rewires n and N to do the highlighing...
-    nnoremap <silent> n   n:call HLNext(0.4)<cr>
-    nnoremap <silent> N   N:call HLNext(0.4)<cr>
-
-
-    " blink the line containing the match...
-    function! HLNext (blinktime)
-        set invcursorline
-        redraw
-        exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-        set invcursorline
-        redraw
-    endfunction
-
-"====[ Always turn on syntax highlighting for diffs ]=========================
-
-    " use the filetype mechanism to select automatically...
-    filetype on
-    augroup PatchDiffHighlight
-        autocmd!
-        autocmd FileType  diff   syntax enable
-    augroup END
-
-
+vmap <up>    <Plug>SchleppUp
+vmap <down>  <Plug>SchleppDown
+vmap <left>  <Plug>SchleppLeft
+vmap <right> <Plug>SchleppRight
