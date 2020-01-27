@@ -1,5 +1,7 @@
 autocmd! bufwritepost .vimrc source %
 
+let mapleader = ","
+
 set tabstop=2
 
 set expandtab
@@ -40,10 +42,11 @@ endif
 
 " Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'metakirby5/codi.vim'
-Plug 'zirrostig/vim-schlepp'
-Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+  Plug 'drewtempelmeyer/palenight.vim' " colorscheme
+  " Plug 'metakirby5/codi.vim'  " Not great for heavier python
+  Plug 'zirrostig/vim-schlepp' " move blocks in visual mode 
+  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'} " fuzzy search
+  Plug 'sillybun/vim-repl' " repl while coding in python
 call plug#end()
 
 " 81st column and after get highlighted
@@ -64,3 +67,11 @@ vmap <up>    <Plug>SchleppUp
 vmap <down>  <Plug>SchleppDown
 vmap <left>  <Plug>SchleppLeft
 vmap <right> <Plug>SchleppRight
+
+" For vim-repl
+let g:repl_position = 3
+let g:repl_stayatrepl_when_open = 0
+let g:repl_cursor_down = 1
+nnoremap <leader>r :REPLToggle<Cr>
+let g:repl_auto_sends = ['class ', 'def ', 'for ', 'if ', 'while ', 'with ']
+
