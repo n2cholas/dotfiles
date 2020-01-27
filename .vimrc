@@ -26,8 +26,9 @@ let NERDTreeIgnore = ['\.pyc$']
 :command! NT NERDTree 
 
 " Makes the cursor skinny in insert mode
-au InsertEnter * silent execute "!echo -en \<esc>[5 q"
-au InsertLeave * silent execute "!echo -en \<esc>[2 q"
+let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
+let &t_SR = "\<esc>[3 q"  " blinking underline in replace mode
+let &t_EI = "\<esc>[ q"  " default cursor (usually blinking block) otherwise
 
 if (has("termguicolors"))
   set termguicolors
