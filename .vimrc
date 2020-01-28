@@ -41,6 +41,13 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Install NERDTree (doesn't work with plugged sometimes)
+if empty(glob('/.vim/pack/vendor/start/nerdtree/README.markdown'))
+   silent !git clone https://github.com/preservim/nerdtree.git 
+      \ ~/.vim/pack/vendor/start/nerdtree
+   silent !vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
+endif
+
 " Plugins
 call plug#begin('~/.vim/plugged')
   Plug 'drewtempelmeyer/palenight.vim' " colorscheme
