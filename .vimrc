@@ -43,7 +43,7 @@ endif
 " Plugins
 call plug#begin('~/.vim/plugged')
   Plug 'drewtempelmeyer/palenight.vim'  " colorscheme
-  Plug 'zirrostig/vim-schlepp'  " move blocks in visual mode 
+  Plug 'zirrostig/vim-schlepp'  " move blocks in visual mode
   Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}  " fuzzy search
   Plug 'sillybun/vim-repl'  " repl while coding in python
   Plug 'https://github.com/preservim/nerdtree.git'  " nerdtree menu
@@ -83,11 +83,11 @@ let g:repl_python_automerge = 1  " merges split single lines
 let g:repl_console_name = 'REPL'
 nnoremap <leader>r :REPLToggle<Cr>
 let g:repl_auto_sends = ['class ', 'def ', 'for ', 'if ', 'while ', 'with ']
-autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>  " breakpoint
-autocmd Filetype python nnoremap <F10> <Esc>:REPLPDBN<Cr>  " next
-autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>  " step
+autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>
+autocmd Filetype python nnoremap <F10> <Esc>:REPLPDBN<Cr>
+autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>
 
 " NERDTree Stuff
 let NERDTreeIgnore = ['\.pyc$']
-:command! NT NERDTree 
+:command! NT NERDTree
 
