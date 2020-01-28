@@ -41,20 +41,13 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Install NERDTree (doesn't work with plugged sometimes)
-if empty(glob('/.vim/pack/vendor/start/nerdtree/README.markdown'))
-   silent !git clone https://github.com/preservim/nerdtree.git 
-      \ ~/.vim/pack/vendor/start/nerdtree
-   silent !vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
-endif
-
 " Plugins
 call plug#begin('~/.vim/plugged')
-  Plug 'drewtempelmeyer/palenight.vim' " colorscheme
-  " Plug 'metakirby5/codi.vim'  " Not great for heavier python
-  Plug 'zirrostig/vim-schlepp' " move blocks in visual mode 
-  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'} " fuzzy search
-  Plug 'sillybun/vim-repl' " repl while coding in python
+  Plug 'drewtempelmeyer/palenight.vim'  " colorscheme
+  Plug 'zirrostig/vim-schlepp'  " move blocks in visual mode 
+  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}  " fuzzy search
+  Plug 'sillybun/vim-repl'  " repl while coding in python
+  Plug 'https://github.com/preservim/nerdtree.git'  " nerdtree menu
 call plug#end()
 
 " 81st column and after get highlighted
@@ -77,9 +70,14 @@ vmap <left>  <Plug>SchleppLeft
 vmap <right> <Plug>SchleppRight
 
 " For vim-repl
-let g:repl_position = 3
-let g:repl_stayatrepl_when_open = 0
-let g:repl_cursor_down = 1
+let g:repl_position = 3  " opens to right
+let g:repl_stayatrepl_when_open = 0  " doesn't keep cursor at repl
+let g:repl_cursor_down = 1  " newline after send to repl
+let g:repl_python_automerge = 1  " merges split single lines
+let g:repl_console_name = 'REPL'
 nnoremap <leader>r :REPLToggle<Cr>
 let g:repl_auto_sends = ['class ', 'def ', 'for ', 'if ', 'while ', 'with ']
+autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>  " breakpoint
+autocmd Filetype python nnoremap <F10> <Esc>:REPLPDBN<Cr>  " next
+autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>  " step
 
