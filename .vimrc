@@ -3,7 +3,6 @@ autocmd! bufwritepost .vimrc source %
 let mapleader = ","
 
 set tabstop=2
-
 set expandtab
 
 set number
@@ -17,13 +16,13 @@ set splitright
 set hlsearch
 set showmatch
 set incsearch
+set ignorecase
 
 set mouse=a
 set clipboard=unnamed
-set noswapfile
+set pastetoggle=<F2>
 
-let NERDTreeIgnore = ['\.pyc$']
-:command! NT NERDTree 
+set noswapfile
 
 " Makes the cursor skinny in insert mode
 let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
@@ -69,6 +68,13 @@ vmap <down>  <Plug>SchleppDown
 vmap <left>  <Plug>SchleppLeft
 vmap <right> <Plug>SchleppRight
 
+" map sort to ,s
+vnoremap <Leader>s :sort<CR>
+
+" easily move highlighted code blocks
+vnoremap < <gv
+vnoremap > >gv
+
 " For vim-repl
 let g:repl_position = 3  " opens to right
 let g:repl_stayatrepl_when_open = 0  " doesn't keep cursor at repl
@@ -80,4 +86,8 @@ let g:repl_auto_sends = ['class ', 'def ', 'for ', 'if ', 'while ', 'with ']
 autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>  " breakpoint
 autocmd Filetype python nnoremap <F10> <Esc>:REPLPDBN<Cr>  " next
 autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>  " step
+
+" NERDTree Stuff
+let NERDTreeIgnore = ['\.pyc$']
+:command! NT NERDTree 
 
