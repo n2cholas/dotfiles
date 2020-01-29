@@ -96,3 +96,8 @@ let NERDTreeIgnore = ['\.pyc$']
 " Airline Stuff
 let g:airline_detect_paste=1
 let g:airline_detect_spell=1
+
+" Hide command bar
+set noshowcmd
+set shortmess+=F  " get rid of filename
+set noshowmode
