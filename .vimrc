@@ -47,6 +47,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}  " fuzzy search
   Plug 'sillybun/vim-repl'  " repl while coding in python
   Plug 'https://github.com/preservim/nerdtree.git'  " nerdtree menu
+  Plug 'vim-airline/vim-airline'
+  Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " 81st column and after get highlighted
@@ -91,3 +93,6 @@ autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>
 let NERDTreeIgnore = ['\.pyc$']
 :command! NT NERDTree
 
+" Airline Stuff
+let g:airline_detect_paste=1
+let g:airline_detect_spell=1
