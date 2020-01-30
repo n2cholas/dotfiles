@@ -47,8 +47,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}  " fuzzy search
   Plug 'sillybun/vim-repl'  " repl while coding in python
   Plug 'https://github.com/preservim/nerdtree.git'  " nerdtree menu
-  Plug 'vim-airline/vim-airline'
+  Plug 'itchyny/lightline.vim'  " status bar
   Plug 'tpope/vim-fugitive'
+  Plug 'https://github.com/ycm-core/YouCompleteMe.git'
 call plug#end()
 
 " 81st column and after get highlighted
@@ -85,19 +86,31 @@ let g:repl_python_automerge = 1  " merges split single lines
 let g:repl_console_name = 'REPL'
 nnoremap <leader>r :REPLToggle<Cr>
 let g:repl_auto_sends = ['class ', 'def ', 'for ', 'if ', 'while ', 'with ']
+let g:repl_input_symbols = {'python': ['>>>', '>>>>', 'ipdb>', 'pdb', '...']}
 autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>
-autocmd Filetype python nnoremap <F10> <Esc>:REPLPDBN<Cr>
-autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>
+autocmd Filetype python nnoremap <leader>n <Esc>:REPLPDBN<Cr>
+autocmd Filetype python nnoremap <leader>s <Esc>:REPLPDBS<Cr>
 
 " NERDTree Stuff
 let NERDTreeIgnore = ['\.pyc$']
 :command! NT NERDTree
 
-" Airline Stuff
-let g:airline_detect_paste=1
-let g:airline_detect_spell=1
+"LightLine Stuff
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
+let s:palette = g:lightline#colorscheme#{g:lightline.colorscheme}#palette
+let s:palette.normal.middle = [ [ 'NONE', 'NONE', 'NONE', 'NONE' ] ]
+let s:palette.inactive.middle = s:palette.normal.middle
+let s:palette.tabline.middle = s:palette.normal.middle
 
 " Hide command bar
-set noshowcmd
-set shortmess+=F  " get rid of filename
+set laststatus=2
 set noshowmode
