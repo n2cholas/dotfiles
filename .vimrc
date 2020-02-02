@@ -53,6 +53,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'dense-analysis/ale'  " async linter
   Plug 'maximbaz/lightline-ale'  " display errors
   Plug 'https://github.com/ycm-core/YouCompleteMe.git'  " intellisense
+  Plug 'bling/vim-bufferline'  " buffers in status line
 call plug#end()
 
 " 81st column and after get highlighted
@@ -106,26 +107,31 @@ let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-      \   'right': [ ['lineinfo'],
-      \              ['readonly', 'linter_warnings', 'linter_errors',
-      \               'linter_ok'],
-      \              ['percent'] ]
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ],
+      \             [ 'bufferline' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'readonly', 'linter_warnings', 'linter_errors',
+      \               'linter_ok' ],
+      \              [ 'percent' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'FugitiveHead',
+      \   'bufferline': 'MyBufferLine',
       \ },
       \ 'component_expand': {
       \   'linter_warnings': 'LightlineLinterWarnings',
       \   'linter_errors': 'LightlineLinterErrors',
-      \   'linter_ok': 'LightlineLinterOK'
+      \   'linter_ok': 'LightlineLinterOK',
       \ },
       \ 'component_type': {
       \   'readonly': 'error',
       \   'linter_warnings': 'warning',
-      \   'linter_errors': 'error'
+      \   'linter_errors': 'error',
       \ },
       \ }
+"      \ 'separator': { 'left': '▶', 'right': '◀' },
+"      \ 'subseparator': { 'left': '▶', 'right': '◀' },
+"      \ }
 function! LightlineLinterWarnings() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
@@ -142,7 +148,14 @@ function! LightlineLinterOK() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '✓ ' : ''
+  return l:counts.total == 0 ? '✓' : ''
+endfunction
+function! MyBufferLine() abort
+  call bufferline#refresh_status()
+  let b = g:bufferline_status_info.before
+  let c = g:bufferline_status_info.current
+  let a = g:bufferline_status_info.after
+  return b . c . a
 endfunction
 
 autocmd User ALELint call lightline#update()
@@ -151,6 +164,12 @@ let s:palette = g:lightline#colorscheme#{g:lightline.colorscheme}#palette
 let s:palette.normal.middle = [ [ 'NONE', 'NONE', 'NONE', 'NONE' ] ]
 let s:palette.inactive.middle = s:palette.normal.middle
 let s:palette.tabline.middle = s:palette.normal.middle
+
+" BufferLine
+let g:bufferline_echo = 0
+let g:bufferline_modified = ' +'
+let g:bufferline_active_buffer_left = ''
+let g:bufferline_active_buffer_right = ''
 
 " netrw stuff
 " Toggle Vexplore with Ctrl-E
@@ -198,3 +217,5 @@ inoremap <expr> [ ConditionalPairMap('[', ']')
 " Hide command bar
 set laststatus=2
 set noshowmode
+set noshowcmd
+set shortmess+=F
