@@ -54,6 +54,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'maximbaz/lightline-ale'  " display errors
   Plug 'https://github.com/ycm-core/YouCompleteMe.git'  " intellisense
   Plug 'bling/vim-bufferline'  " buffers in status line
+  Plug 'christoomey/vim-tmux-navigator'  " switch windows easily
 call plug#end()
 
 " 81st column and after get highlighted
@@ -103,20 +104,25 @@ autocmd Filetype python nnoremap <leader>s <Esc>:REPLPDBS<Cr>
 " LightLine Stuff
 " some from https://github.com/statico/dotfiles/blob/master/.vim/vimrc#L374
 " https://github.com/itchyny/lightline.vim/issues/236
+" removed 'filename', 'modified'
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ],
+      \             [ 'gitbranch', 'readonly' ],
       \             [ 'bufferline' ] ],
       \   'right': [ [ 'lineinfo' ],
       \              [ 'readonly', 'linter_warnings', 'linter_errors',
       \               'linter_ok' ],
       \              [ 'percent' ] ]
       \ },
+      \ 'component': {
+      \   'bufferline': '%{bufferline#refresh_status()}%{g:bufferline_status_info.before}'.
+      \                 '%#TabLineSel#%{g:bufferline_status_info.current}'.
+      \                 '%#LightLineLeft_active_3#%{g:bufferline_status_info.after}',
+      \ },
       \ 'component_function': {
       \   'gitbranch': 'FugitiveHead',
-      \   'bufferline': 'MyBufferLine',
       \ },
       \ 'component_expand': {
       \   'linter_warnings': 'LightlineLinterWarnings',
@@ -129,9 +135,6 @@ let g:lightline = {
       \   'linter_errors': 'error',
       \ },
       \ }
-"      \ 'separator': { 'left': '▶', 'right': '◀' },
-"      \ 'subseparator': { 'left': '▶', 'right': '◀' },
-"      \ }
 function! LightlineLinterWarnings() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
@@ -168,8 +171,8 @@ let s:palette.tabline.middle = s:palette.normal.middle
 " BufferLine
 let g:bufferline_echo = 0
 let g:bufferline_modified = ' +'
-let g:bufferline_active_buffer_left = ''
-let g:bufferline_active_buffer_right = ''
+let g:bufferline_active_buffer_left = '[ '
+let g:bufferline_active_buffer_right = '] '
 
 " netrw stuff
 " Toggle Vexplore with Ctrl-E
@@ -199,6 +202,8 @@ let g:netrw_winsize = -28
 let g:netrw_banner = 0
 let g:netrw_sort_sequence = '[\/]$,*'  " dirs on top, files under
 
+" TMUX Navigator
+let g:tmux_navigator_save_on_switch = 2
 
 " Auto close brace
 function! ConditionalPairMap(open, close)  " only at end of line
