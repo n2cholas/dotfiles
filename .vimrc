@@ -114,7 +114,7 @@ nnoremap <leader>d <Esc>VG:SendLineToREPL<Cr>
 nnoremap <leader>a <Esc>ggVG:SendLineToREPL<Cr>
 nnoremap <leader>c :call RunCell('nW')<Cr>
 nnoremap <leader>C :call RunCell('W')<Cr>
-autocmd Filetype python noremap <leader>q <Esc>o%pylab<Esc>:SendCurrentLine<Cr>"_dd
+autocmd Filetype python nnoremap <leader>q <Esc>o%pylab<Esc>:SendCurrentLine<Cr>"_dd
 autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>
 autocmd Filetype python nnoremap <leader>n <Esc>:REPLPDBN<Cr>
 autocmd Filetype python nnoremap <leader>s <Esc>:REPLPDBS<Cr>
