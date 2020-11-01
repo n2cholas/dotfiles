@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/nicv/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="af-magic"
 
@@ -20,6 +20,9 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 bindkey '^ ' autosuggest-accept
 
+mkdir -p $HOME/.trash
 trash () {
   mv $1 ~/.trash
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

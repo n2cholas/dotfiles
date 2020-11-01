@@ -46,6 +46,7 @@ endif
 " Plugins
 call plug#begin('~/.vim/plugged')
   Plug 'drewtempelmeyer/palenight.vim'  " colorscheme
+  Plug 'takac/vim-hardtime'
   Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}  " fuzzy search
   Plug 'sillybun/vim-repl'  " repl while coding in python
   Plug 'itchyny/lightline.vim'  " status bar
@@ -89,7 +90,7 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 
 " For vim-repl
-let g:repl_program = {'python': 'ipython'}
+let g:repl_program = {'python': 'python3'}
 let g:repl_ipython_version = '7.7'
 
 let g:repl_position = 3  " opens to right
@@ -239,6 +240,9 @@ endf
 inoremap <expr> ( ConditionalPairMap('(', ')')
 inoremap <expr> { ConditionalPairMap('{', '}')
 inoremap <expr> [ ConditionalPairMap('[', ']')
+
+" Hardtime
+let g:hardtime_default_on = 1
 
 " Hide command bar
 set laststatus=2
