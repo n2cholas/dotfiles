@@ -1,0 +1,5 @@
+[user]
+	name = Nicholas Vadivelu
+	email = nicholas.vadivelu@gmail.com
+[core]
+	excludesFile = ~/.gitignore
