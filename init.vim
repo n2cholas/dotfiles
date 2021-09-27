@@ -25,7 +25,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
   Plug 'takac/vim-hardtime'
 call plug#end()
 
-let g:hardtime_default_on = 1
+let g:hardtime_default_on = 0
 let g:highlightedyank_highlight_duration = 500
 let g:tmux_navigator_save_on_switch = 2
 
